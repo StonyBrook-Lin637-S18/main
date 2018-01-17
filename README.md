@@ -17,9 +17,10 @@ Prerequisites
 
 This course assumes a certain degree of familiarity with generative syntax, phonology, and basic mathematics (sets, functions, relations, first-order logic).
 Please take the [online survey][survey] to ensure that you satisfy the prerequisites.
-If you have weaknesses, consult the relevant material suggested in the [readings repository][readings] (access restricted to enrolled students).
+Giving a few wrong answers is okay, but if you feel that you do not know enough in a certain area, you should brush up on that in the first two weeks of the class.
+Relevant materials are suggested in the [readings repository][readings] (access restricted to enrolled students).
 
-In addition, you will have to use Python and possibly markdown and LaTeX at various points during this course.
+In addition, you will have to use Python and possibly markdown and/or LaTeX at various points during this course.
 The [link list](#link-list) at the end of this document has some useful tutorials.
 
 If you don't want to deal with installing Python and git, you can download our [virtual machine][vm] that already comes with everything preconfigured.
@@ -40,31 +41,20 @@ Each homework will be hosted in its own private repository. Only course particip
 
 [Homework 1](../../../homework1): not unlocked yet
 
-[Homework 2](../../../homework2): not unlocked yet
-
-[Homework 3](../../../homework3): not unlocked yet
-
-[Homework 4](../../../homework4): not unlocked yet
-
-[Homework 5](../../../homework5): not unlocked yet
-
-[Homework 6](../../../homework6): not unlocked yet
-
 
 Compilation Instructions
 ------------------------
 
 If you want to compile the lecture notes yourself, or use them as the basis for your own course, carefully follow the steps below.
 
-1) Make sure you have all necessary software installed and set up correctly, in particular
+1.  Make sure you have all necessary software installed and set up correctly, in particular
+    - a recent LaTeX distribution with `Tikz` >= 3.00 and recent versions of `minted` and `forest`
+    - the Python `pygments` package (required by minted)
 
-  - a recent LaTeX distribution with _Tikz_ >= 3.00 and recent versions of _minted_ and _forest_
-  - the Python pygments package (required by minted)
+2.  Clone the repository via `git`, or download and extract the [zip file](../../archive/master.zip).
+    Note that the project folder will also contain an empty _build_ folder, which is used for temporary files to speed up compilation.
 
-2) Clone the repository via git, or download and extract the [zip file](../../archive/master.zip).
- Note that the project folder will also contain an empty _build_ folder, which is used for temporary files to speed up compilation.
-
-3) Use the standard tex --> pdf compilation tool chain (**not** tex --> dvi --> ps --> pdf!), but make sure that pdflatex is run with the parameters --shell-escape and --etex.
+3.  Use the standard `tex --> pdf` compilation tool chain (**not** `tex --> dvi --> ps --> pdf`), but make sure that `pdflatex` is run with the parameters `--shell-escape` and `--etex`.
 
 
 Link List
