@@ -19,7 +19,7 @@ This course assumes a certain degree of familiarity with generative syntax, phon
 Please take the [online survey][survey] to ensure that you satisfy the prerequisites.
 If you have weaknesses, consult the relevant material suggested in the [readings repository][readings] (access restricted to enrolled students).
 
-In addition, you will have to use Python, markdown and LaTeX at various points during this course.
+In addition, you will have to use Python and possibly markdown and LaTeX at various points during this course.
 The [link list](#link-list) at the end of this document has some useful tutorials.
 
 If you don't want to deal with installing Python and git, you can download our [virtual machine][vm] that already comes with everything preconfigured.
@@ -38,17 +38,17 @@ Homeworks
 
 Each homework will be hosted in its own private repository. Only course participants have access to these repositories.
 
-[Homework 1](../../../homework1): due Wed, Feb 10, 11:59am
+[Homework 1](../../../homework1): not unlocked yet
 
-[Homework 2](../../../homework2): due Wed, Feb 17, 11:59am
+[Homework 2](../../../homework2): not unlocked yet
 
-[Homework 3](../../../homework3): due Fri, Feb 26, 11:59am
+[Homework 3](../../../homework3): not unlocked yet
 
-[Homework 4](../../../homework4): due Wed, Mar 2, 11:59am
+[Homework 4](../../../homework4): not unlocked yet
 
-[Homework 5](../../../homework5): due Fri, Mar 11, 11:59am
+[Homework 5](../../../homework5): not unlocked yet
 
-[Homework 5](../../../homework6): due Fri, Apr 8, 11:59am
+[Homework 6](../../../homework6): not unlocked yet
 
 
 Compilation Instructions
