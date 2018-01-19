@@ -1,6 +1,6 @@
 \ProvidesPackage{mycommands}
 
-\addto\captionsenglish{\renewcommand{\chaptername}{Lecture}}
+\addto\captionsenglish{\renewcommand{\chaptername}{Unit}}
 \addto\captionsenglish{\renewcommand{\bibname}{References and Further Reading}}
 \def\thesection{\arabic{section}}
 
@@ -80,9 +80,11 @@
 \newcommand{\seccitet}[2]{\citeauthor{#1} (\citeyear{#1}:~$\S$#2)}
 
 % example box environment
-\tikzstyle{examplebox} = [draw=black, fill=white, very thick,
+\colorlet{exmp}{SeaGreen4}
+\colorlet{tech}{Purple}
+\tikzstyle{examplebox} = [draw=exmp, fill=exmp!25, very thick,
     rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
-\tikzstyle{exampletitle} = [fill=black, text=white]
+\tikzstyle{exampletitle} = [fill=exmp, text=white]
 
 % code for an examplebox
 % first we need a background layer
@@ -96,7 +98,7 @@
     \tikz{
         \node[inner sep=10pt, inner ysep=20pt] (text) {#1};
         \begin{pgfonlayer}{background}
-        \draw[black, very thick, rounded corners] 
+        \draw[exmp, very thick, rounded corners] 
             (text.south west) -- (text.north west) --
             (text.north east) -- (text.south east) -- cycle;
         \end{pgfonlayer}
@@ -109,7 +111,7 @@
     \tikz{
         \node[inner sep=10pt, inner ysep=20pt] (text) {#1};
         \begin{pgfonlayer}{background}
-        \draw[black, very thick, rounded corners] 
+        \draw[exmp, very thick, rounded corners] 
             (text.south west) -- (text.north west) --
             (text.north east) -- (text.south east);
         \end{pgfonlayer}
@@ -121,9 +123,9 @@
     \tikz{
         \node[inner sep=10pt, inner ysep=20pt] (text) {#1};
         \begin{pgfonlayer}{background}
-        \draw[black, very thick, rounded corners] 
+        \draw[exmp, very thick, rounded corners] 
             (text.south west) -- (text.north west); 
-        \draw[black, very thick, rounded corners] 
+        \draw[exmp, very thick, rounded corners] 
             (text.north east) -- (text.south east);
         \end{pgfonlayer}
     }
@@ -134,7 +136,7 @@
     \tikz{
         \node[inner sep=10pt, inner ysep=20pt] (text) {#1};
         \begin{pgfonlayer}{background}
-        \draw[black, very thick, rounded corners] 
+        \draw[exmp, very thick, rounded corners] 
             (text.north west) -- (text.south west) --
             (text.south east) -- (text.north east);
         \end{pgfonlayer}
@@ -157,7 +159,7 @@
     \MakeFramed {\FrameRestore}
     \noindent%
     \tikzset{external/export next=false}%
-    \tikz\node[fill=black,text=white,anchor=west,overlay]
+    \tikz\node[fill=exmp,text=white,anchor=west,overlay]
         at (0em,2.5em) {Example \theexamplebox \quad #1};%
     \addcontentsline{exs}{examplebox}{\protect\numberline{\theexamplebox} #1}%
     \ignorespaces
@@ -174,7 +176,7 @@
     \MakeFramed {\FrameRestore}
     \noindent%
     \tikzset{external/export next=false}%
-    \tikz\node[fill=black,text=white,anchor=west,overlay]
+    \tikz\node[fill=exmp,text=white,anchor=west,overlay]
         at (0em,2.5em) {Example \theexamplebox\quad #1 \quad\DangerSymbol};%
     \addcontentsline{exs}{examplebox}{\protect\numberline{\theexamplebox} #1 \DangerSymbol}%
     \ignorespaces
@@ -187,7 +189,7 @@
     \tikz{
         \node[inner sep=10pt, inner ysep=20pt] (text) {#1};
         \begin{pgfonlayer}{background}
-            \fill[gray!10] (text.north west) rectangle (text.south east);
+            \fill[tech!10] (text.north west) rectangle (text.south east);
         \end{pgfonlayer}
     }
 }
@@ -198,7 +200,7 @@
     \MakeFramed {\FrameRestore}
     \noindent\ignorespaces%
     \tikzset{external/export next=false}%
-    \tikz\node[fill=black,text=white,anchor=west,overlay]
+    \tikz\node[fill=tech,text=white,anchor=west,overlay]
         at (0em,2.5em) {Background \quad #1};%
     \ignorespaces
 }

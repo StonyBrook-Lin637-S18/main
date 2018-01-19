@@ -1,50 +1,396 @@
-\chapter{Computation and Formalization}
+\chapter{Computation and formalization}
 \label{cha:Formal}
 
-Without a doubt the most unfortunate fact about computational linguistics is that its name is \emph{computational linguistics}.
+Without a doubt the most unfortunate fact about the field of computational linguistics is that its name is \emph{computational linguistics}.
 The term inherits a dichotomy that is hard to tease apart for the uninitiated: the distinction between computers and computing.
-While computers are the most common tool for carrying out computations nowadays, they are not what computing is about.
-Computation, in its barest form, is the principled manipulation of information.
+
+Computational linguistics can certainly be about solving language-related tasks with computers, but it can be so much more.
+Once one understands how broad the notion of computation is, it becomes clear that the reach of computational linguistics can go far beyond computers.
+In doing so, it provides a deeper understanding of what language looks like from a computational perspective.
+This goal sounds rather vague, for sure, but it is not without merit.
+% Much like a physicist seeks a deeper understanding of the laws of the universe and thus opens up the road towards new technologies, the computational study of language can help with the more grounded concerns of making computers language-savvy.
+
+The book you are holding in your hands (and, presumably, reading) is all about this broader notion of computational linguistics.
+The rest of this chapter tries to sharpen the profile of what we may call ``computational computational linguistics'', or simply \emph{computational$^2$ linguistics}.
+We will also discuss why this approach is worth pursuing, lest you put away the book before even finishing its first chapter.
+The specific merits of computational$^2$ linguistics depends a lot on whether you are a natural language engineer, a theoretical linguist, or a cognitive scientist, but each group stands to gain something.
+
+
+\section{Computers vs computation}
+
+Here is a statement that the average layperson will find puzzling:
+While computers are the most common tool for carrying out computations nowadays, they are not what computation is about.
+Computation, in its barest form, is the principled manipulation of information, of transforming some input into some output in a precise, step-wise fashion.
 When a computer verifies $1 + 1 = 2$, this act of computation is instantiated via a series of electrical impulses that affect some of the millions of transistors that make up its hardware.
-The same computation will look very different when executed by a human brain, with neurons firing in a specific cascade that gives rise to a three-dimensional activation pattern.
-Or maybe we are just dealing with a few beads being moved around in an abacus.
-Despite these differences in biological substrates, structural changes, and sheer computing power, all three are equally valid examples of computation.
-In fact, the notion of computation is so fundamental a concept that even the universe itself can be viewed as one giant computation --- computers, in contrast, are just a handy gadget for carrying out computations.
+But the computation is not tied to that specific electrical process, it can take many physical instantiations in this world.
 
-\emph{Computational linguistics} is an unfortunate name because it does not clearly disambiguate these two terms: 
-\Note{At least it is better than the German term \emph{Computerlinguistik}, which can only have the first meaning when interpreted compositionally.}
-are we talking about language and computers, or language and computation?
-For the purposes of this course, computational linguistics will always refer to ``language and computation'', while ``language and computers'' will be subsumed under the term \emph{natural language processing} (NLP).
-NLP is about solving language-related tasks with computers, e.g.\ speech synthesis, machine translation, or even the basic search function in your text editor.
-Computational linguistics is about studying language as an instance of computation.
-And that will be our topic for the next 15 weeks.
+The movie buffs among you will remember the 90s masterpiece \emph{MacGyver: Lost Treasure of Atlantis}.
+In this spiritual successor to the \emph{Indiana Jones} movies, the adventurer MacGyver discovers the secret of Atlantis: a giant, steam-powered computer that operates without electricity.
+Of course one should not lend too much credence to a movie where the protagonist cruises through a military camp with a rocket car that he built in 20 minutes.
+But the idea of a steam-powered computer is not nearly as outlandish.
+Any device that can assume multiple different states and switch between those states in a controlled fashion is capable of computation.
 
-More precisely, this course is concerned with the computational aspects of natural language and how we can analyze them from a formal perspective.
-While it may seem innocuous, this statement is actually very ambiguous and contentious.
-What exactly do we mean by \emph{computational aspects}, why should those be interesting questions to ask, and what is the supposed advantage of this \emph{formal perspective} over the proposals made by theoretical linguists?
+The idea that computation is about transitioning from one state to another in a principled fashion is the central insight behind the \emph{Turing machine}.
+% The Turing machine is named after Alan Turing (1912--1954), arguably one of the most brilliant and influential thinkers of the 20th century.
+% It is impossible to do Turing justice in a few sentences, so reading up on his many accomplishments is left as an exercise to the reader.
+A Turing machine consists of a tape, a read/write head, and what's called a state register.
+The read/write head can move to any position on the tape, read the symbol that is there, and possibly overwrite it with a new symbol.
+The state register is like a knob that can be in one of finitely many positions, e.g.\ 7 out of 10 on a volume dial.
+The purpose of the state register is to control the behavior of the Turing machine.
+Based on the symbol that is currently under the read/write head and the state of the register, the Turing machine performs a \emph{write action} (overwrite or do nothing), a \emph{move action} (move left, move right, stay in place), and a \emph{state register change} (keep state, switch to different state).
+So a basic instruction of a Turing machine may read like ``if the symbol under the head is 1 and the state is A, overwrite 1 with 0, move left, and switch to state B''.
+A finite collection of such instructions is a program that can be run on a Turing machine to carry out specific computations.
 
-\section{Computational Linguistics: Why Should Anybody Care?}
+\begin{examplebox}[Copying with a Turing machine]
+    The table below describes a small program for a Turing machine.
+    \begin{center}
+        \begin{tabular}{cc|ccc}
+            \emph{state} & \emph{tape symbol} & \emph{write action} & \emph{move action} & \emph{new state}\\
+            \hline
+            A            & 0                  & none                & none               & F\\
+            A            & 1                  & write(0)            & $\Leftarrow$       & B\\
+            B            & 0                  & none                & $\Leftarrow$       & C\\
+            B            & 1                  & none                & $\Leftarrow$       & B\\
+            C            & 0                  & write(1)            & $\Rightarrow$      & D\\
+            C            & 1                  & none                & $\Leftarrow$       & C\\
+            D            & 0                  & none                & $\Rightarrow$      & E\\
+            D            & 1                  & none                & $\Rightarrow$      & D\\
+            E            & 0                  & write(1)            & $\Leftarrow$       & A\\
+            E            & 1                  & none                & $\Rightarrow$      & E\\
+        \end{tabular}
+    \end{center}
+    % 
+    This looks fairly cryptic, so let's tease apart what's going on here.
 
-\subsection{Practical Arguments}
+    Each individual instruction is easy to decypher.
+    The machine has 6 different states: A, B, C, D, E, and F.
+    There are only two kinds of symbols are used on the tape, 0 and 1.
+    A command like write(1) means that the machine writes a 1 onto the tape, whereas the arrows $\Leftarrow$ and $\Rightarrow$ specify that the machine moves one symbol to the left or right after the write action is finished.
+    So line 5, for example, tells us that if the machine is in state C and has a 0 under its read/write head, it writes a 1, moves to the next symbol to the right, and switches into state D.
+
+    That is all nice and dandy, but what is it the program does?
+    This feels like a badly written instruction manual where each individual sentence makes sense but you can't figure out how they fit together (very much unlike this book, I hope).
+    Let us look at a concrete example.
+
+    Suppose that the machine starts in the following configuration: 
+    The tape consists mostly of 0s, except for two adjacent 1s, and the read-write head is positioned on the right 1, with the state register in state A.
+    This is visualized below.
+    %
+    \begin{center}
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 \\
+                  &   &   &   &   & A\\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-6.south west) rectangle (m-1-6.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+    \end{center}
+    %
+    This configuration is matched by the second line of the instruction table.
+    Hence the machine overwrites the current symbol with a 0, moves to the left and switches into state B\@.
+    Here is the resulting configuration.
+    %
+    \begin{center}
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                  &   &   &   & B \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-5.south west) rectangle (m-1-5.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+    \end{center}
+    %
+    Since the read/write head is now over a 1 while the machine is in state B, the instruction on line 4 is triggered: the machine keeps the current symbol as is, moves to the left, and keeps the register in state B\@.
+    %
+    \begin{center}
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                  &   &   & B \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-4.south west) rectangle (m-1-4.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+    \end{center}
+    %
+    This in turn triggers the third instruction, so that the machine does not perform any write action, moves one symbol to the left, and switches the register to state C\@. 
+    %
+    \begin{center}
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                  &   & C & \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-3.south west) rectangle (m-1-3.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+    \end{center}
+    %
+    The rest of the computation then proceeds as depicted below:
+    %
+    \begin{center}
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
+                  &   & &   D\\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-4.south west) rectangle (m-1-4.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
+                  &   &   &   & E\\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-5.south west) rectangle (m-1-5.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 1 & 0 & 1 & 0 & 0 & 0 \\
+                  &   &   &   &   & E\\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-6.south west) rectangle (m-1-6.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 1 & 0 & 1 & 1 & 0 & 0 \\
+                  &   &   &   & A &  \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-5.south west) rectangle (m-1-5.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\
+                  &   &   & B &   &  \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-4.south west) rectangle (m-1-4.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\
+                  &   & C &   &   &  \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-3.south west) rectangle (m-1-3.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\
+                  & C &   &   &   &  \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-2.south west) rectangle (m-1-2.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 \\
+                  &   & D &   &   &  \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-3.south west) rectangle (m-1-3.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 \\
+                  &   &   & D &   &  \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-4.south west) rectangle (m-1-4.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 \\
+                  &   &   &   & E &  \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-5.south west) rectangle (m-1-5.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 1 & 1 & 0 & 1 & 1 & 0 & 0 \\
+                  &   &   & A &   &  \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-4.south west) rectangle (m-1-4.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+
+        \begin{tikzpicture}
+            \matrix (m) at (0,0) [matrix of nodes] {
+                0 & 1 & 1 & 0 & 1 & 1 & 0 & 0 \\
+                  &   &   & F &   &  \\
+            };
+
+            \begin{pgfonlayer}{background}
+                \draw[draw=blue!75,fill=blue!25,thick] (m-2-4.south west) rectangle (m-1-4.north east);
+            \end{pgfonlayer}
+        \end{tikzpicture}
+    \end{center}
+    
+    The F state is special because it does not trigger any new instructions, so the machine halts once it reaches this state.
+    Looking at the result of the individual steps, we can now see that the instructions at the beginning of the example program the Turing machine so that it copies sequences of 1s.
+    If the tape had contained 11111 instead of 11, the final output would have contained two instances of 11111, assuming a sufficiently long tape.
+\end{examplebox}
+
+The example above shows that a Turing machine can compute copies.
+As we will see in later chapters, copying is actually a very complex task that nonetheless plays an important role in natural languages.
+Despite the complexity of copying, it can be understood in the very general terms of a Turing machine as simply a sequence of configuration changes: what does the tape look like, where are we on the tape, and what state is the machine in?
+
+The generality of the Turing machine is what enables a broader understanding of computation that does not care about the actual hardware.
+A Turing machine is not a concrete object, it's not a tiny box with some tape and a state dial that you can order from Amazon.
+Instead, it is an abstract model of what it means to carry out a computation, and there are many different ways a Turing machine can be instantiated in the real world.
+This is particularly noteworthy because Turing machines act as a kind of standard model for computation.
+It is known that if there is no limit on how much tape is available, any problem that can be solved computationally can be solved by a Turing machine.
+So all kinds of computation can be regarded as a specific program that runs on a Turing machine.
+But this also means that any machine, system, or construct that provides the equivalent of a tape and a controllable read-write head is a computing device.
+
+For example, a Turing machine can even take the form of a very selfish drinking game:
+Gather 4 friends of yours and 6 shot glasses --- I am boldly assuming that you have enough of both.
+Put the shot glasses in a line and fill the rightmost two with a beverage of your choice.
+Then give each one of your friends a card with instructions they have to follow.
+For the sake of exposition, let's assume that your friends are called Bill, Cathy, Damian, and Edith.
+Their respective cards read as follows:
+%
+\begin{itemize}
+    \item \textbf{Bill}\\
+        If the shotglass in front of you is empty, get out of line and put Cathy in front of the glass to the left.
+        Otherwise, leave the glass alone (sorry!), and move to the glass to the left.
+
+    \item \textbf{Cathy}\\
+        If the shotglass in front of you is empty, fill it up, get out of line, and put Damian in front of the glass to the right.
+        Otherwise, leave the glass alone (sorry!),  and move to the glass to the left.
+
+    \item \textbf{Damian}\\
+        If the shotglass in front of you is empty, get out of line and put Edith in front of the glass to the right.
+        Otherwise, move to the glass to the right.
+
+    \item \textbf{Edith}\\
+        If the shotglass in front of you is empty, fill it up, get out of line, and put me in front of the glass to the left.
+        Otherwise, move to the glass to the right.
+\end{itemize}
+%
+The instructions for yourself are slightly more fun.
+If the glass in front of you is full, drink it all, get out of line, and put Bill in front of the glass to the left.
+If the glass is empty, the game is over.
+
+I suppose you can already tell what is going on here.
+When you play this game, it will proceed exactly like the Turing machine from our copying example (it is a selfish drinking game because you are the only one who gets to drink, i.e.~rewrite a 1 as a 0).
+Even though you and your friends are separate individuals and do not form any kind of unified object, the combination of all of you and the shotglasses constitute a Turing machine.
+
+We can make all kinds of changes to this setup without losing the connection to Turing machines.
+For example, we may use bowls instead of glasses, and fill them with M\&Ms instead of some beverage.
+And maybe we do not actually put the bowls in a line but instead assume that they all differ in size like a set of baking bowls, so that ``left'' means ``the next smaller one'' and ``right'' means ``the next bigger one''.
+Perhaps we could even replace your friends with a very well-trained dog.
+Clearly a dog and a human are two very different things, but it changes nothing about the computation that is being carried out.
+No matter how we set things up, the same input will always be transformed into the same output.
+
+Silly as these example may be, the central point stands: changes to the physical make-up of the device that carries out the computations does not entail changes to the computation itself.
+The notion of computation operates at a higher level of abstraction, and that is what gives it such a unifying power.
+We can take computational concepts and apply them to computing devices that do not at all look like the computers we are familiar with: the human brain, the biological mechanisms of gene expression, even the universe itself.
+Despite the differences in physical substrates, structural changes, and sheer computing power, they are all equally valid examples of computing devices and we can  discover interesting things about them by adopting this perspective.
+
+Hopefully you can now appreciate why it is unfortunate that the term \emph{computational linguistics} does not clearly disambiguate between computation and computers.
+\Note{At least it is better than the German term \emph{Computerlinguistik}, which can only have the second meaning when interpreted compositionally.}
+While the latter emphasizes engineering concerns, the former strives for a more abstract perspective that applies to computers as well as humans.
+Seeing how humans are the only known computing device with excellent command of natural language, we would do well to study language at a level that is compatible with those devices and learn from them as much as possible.
+To clearly differentiate the two notions of computational linguistics, I will use \emph{natural language processing} (NLP) in this book to refer to those aspects of computational linguistics that are solely concerned with computers.
+To summarize: NLP is about solving language-related tasks with computers, e.g.~speech synthesis, machine translation, or even the basic search function in your text editor;
+computational linguistics is about studying language as an instance of computation.
+
+% Parental advisory: a beverage with high alcohol content may cause premature failure of the experiment.
+% The same computation will look very different when executed by a human brain, with neurons firing in a specific cascade that gives rise to a three-dimensional activation pattern.
+% Or maybe we are just dealing with a few beads being moved around in an abacus.
+
+This is all still very vague, and to some extent things will only get clearer once we move on from our high-level vantage point and start looking at concrete issues.
+Still, it is always nice to have a rough idea of the road ahead and why it is road worth taking.
+So let us next look at why it makes sense to study language from a computational perspective and how one might go about this.
+
+
+\section{Computational linguistics: The what, how, and why}
+
+\subsection{Practical arguments}
 
 It seems fairly easy to make a case for the importance of studying computational aspects of language (putting aside for now what exactly we mean by that). 
-Usually the first argument to be presented is that a world in which computers can successfully handle all kinds of language-related tasks is preferable to one where they cannot, and consequently it is imperative that we do whatever we can to get computers to this level of aptitude.
+After all, a world in which computers can successfully handle all kinds of language-related tasks is preferable to one where they cannot.
+This would create a second industrial revolution that boldly pushes automation into language-heavy domains: customer service and speech-driven user interfaces, language and writing instruction, knowledge aggregation, and much more.
+Admittedly there is also the risk of mass surveillance, mass unemployment, and the social upheavals that tend to follow both, but one could argue that those would just be short-term growing pains on the way to a more prosperous future.
+If this is correct, then it is imperative that we do whatever we can to get computers to this level of aptitude.
 And just like some understanding of physics had to be in place before engineers could bless mankind with the radio or the combustion engine, we cannot have successful NLP applications without a minimum understanding of language and the computational challenges it poses.
 Computational linguistics thus is a prerequisite for NLP\@.
 
-This argument is too simplistic, though.
-One of the most shocking things about the applied sciences and engineering is how little genuine understanding one needs to construct a useful tool.
+This argument, while intuitively pleasing, is too simplistic.
+One of the most shocking aspects of the applied sciences and engineering is how little genuine understanding one needs to construct a useful tool.
 To give but one example: relativity theory is not an integral part of calculating artillery ballistics.
-In many areas of life the allowed margin of error is large enough that shortcuts, hacks, and brute force methods will get the job done.
+In many areas of life the permitted margin of error is large enough that shortcuts, hacks, and brute force methods will get the job done just fine.
 For practical purposes it is also perfectly fine to make stipulations that fly in the face of scientific consensus but improve the final results.
 In the words of Noam Chomsky \citep[147]{Chomsky90}:
 %
 \begin{quote}
     Throughout history, those who built bridges or designed airplanes often had to make explicit assumptions that went beyond the understanding of the basic sciences.
 \end{quote}
-%
-Similar things can be observed in NLP, where very shallow methods often yield surprisingly useful results.
-A word cloud, for instance, requires only the most basic statistics but can summarize texts in a very effective manner.
+
+Similar things can be observed in NLP\@.
+Many of its tools and techniques ignore well-established linguistic knowledge for the sake of simplicity and efficiency.
+Nonetheless these tools do surprisingly well and often outperform competing models that draw from what linguists have learned about language.
+The computational linguist Frederick Jelinek summarized this state of affairs very succinctly during his time at IBM in the 80s: ``Every time I fire a linguist, the performance of the speech recognizer goes up''.
+A more recent example is a study carried out by Choi \& XXX at Stony Brook University, which evaluated the ability of various models to predict the success of novels.
+% fixme: fix names
+Naively, one would expect that a novel's success is largely dependent on its writing style, narrative structure, and subject matter.
+Yet one of the best models completely ignored those aspects and focused exclusively on word frequencies.
+At this point, then, there is still a large gap between ``language as a computational problem'' and ``computers solving natural language tasks''.
+
+With the rapid rise of machine learning methods in recent years, the gap may even widen over the next few decades.
+General purpose machine learning strategies frequently result in better models than those produced by language-specific techniques in NLP\@.
+If this trend continues to its logical extreme, NLP may be completely absorbed into the field of machine learning.
+In this case, any language-specific insights would be even harder to incorporate given the domain-agnostic nature of the machine learning techniques.
+
+
+
 Things might change in the future as users demand more and more accurate tools for increasingly difficult tasks, but at this stage there is still a large gap between ``language as a computational problem'' and ``computers solving natural language tasks''.
 
 A more refined version of the practical applicability argument points out that while a theoretically informed perspective may not be of any practical use for now, it can lay the foundation for entirely new fields, tools, and businesses in the future.
@@ -120,7 +466,7 @@ we still could not determine whether the computer is, say, sorting a list or sea
 More fine-grained distinctions are completely unthinkable, such as whether one of the two search algorithms below is being used, and if so, which one.
 %
 \begin{center}
-    \pythonfile[firstline=5]{./code/list_search/linear_search.py}
+    \pythonfile[firstline=5,firstnumber=1]{./code/list_search/linear_search.py}
 \end{center}
 \begin{center}
     \begin{pythoncode}
@@ -133,7 +479,7 @@ More fine-grained distinctions are completely unthinkable, such as whether one o
 \end{center}
 
 \begin{center}
-    \pythonfile[firstline=5]{./code/list_search/binary_search.py}
+    \pythonfile[firstline=8,lastline=51,firstnumber=1]{./code/list_search/binary_search_loop.py}
 \end{center}
 \begin{center}
     \begin{pythoncode}
@@ -164,7 +510,7 @@ That does not mean it is a fruitless endeavor, and eventually it will be possibl
 
 \subsubsection{Psychology}
 
-Psychologists aren't interested with the physical instantiation of cognition, they are perfectly happy to treat the brain as a black box that produces a certain output given a certain input.
+Psychologists aren't interested in the physical instantiation of cognition, they are perfectly happy to treat the brain as a black box that produces a certain output given a certain input.
 Their goal is to develop models that replicate these input-output mappings.
 But more often than not these models are highly specific in what cognitive parameters they presuppose.
 
@@ -257,3 +603,20 @@ And if you do know it, I highly recommend that you read it again.
 }
 Nothing we do in here is really difficult, but it takes patience and dedication.
 If some of the material we cover seems overwhelming to you, remember: the most important trait of a good researcher is to enjoy feeling stupid.
+
+\section*{Central concepts}
+
+\begin{itemize}
+    \item Computation $\neq$ computers
+    \item Turing machines
+    \item Linear VS binary search
+    \item Marr's levels of description
+    \item Virtue of abstraction
+\end{itemize}
+
+\section*{References and recommended readings}
+
+Manning on machine learning
+SIGMORPHON competition with neural networks
+Heinz on SL versus LSTM
+Sean Fulop quote

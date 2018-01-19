@@ -2,11 +2,6 @@
 %=================================================================
 %		packages that need to be loaded first
 %=================================================================
-\usepackage{fixltx2e}	% fixes several bugs in LaTeX2e that were
-			% inherited from older versions for the sake
-			% of backwards compatibility
-\usepackage{etex}
-
 \usepackage{calc}
 \usepackage{ifthen}
 \usepackage{ifpdf}
@@ -48,6 +43,9 @@
 %=================================================================
 %			glosses
 %=================================================================
+\makeatletter
+\def\new@fontshape{}
+\makeatother
 \usepackage{gb4e}
 \noautomath
 \makeatletter

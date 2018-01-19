@@ -146,7 +146,7 @@ It follows that lookup in hash table takes constant time, much more efficient th
             e.g.\ $O(8n^4 + 3n^2 + 5n \log n + 5) = O(8n^4) = O(n^4)$
         \item[exponential]
             the amount of time grows exponentially with input size\\
-            e.g.\ $O(2^n + )$
+            e.g.\ $O(4^n + 2^n + 8n^4 + 3n^2 + 5n \log n + 5) = O(4^n)$
         \item[factorial]
             the amount of time grows factorially with the input, where the factorial of $n$ is $n! \is n \mult (n - 1) \mult \cdots \mult 2 \mult 1$ (for instance, $4! = 4 \mult 3 \mult 2 \mult 1$)\\
             e.g.\ $O(8n! \mult n^{10^{100}}) = O(8n!) = O(n!)$
