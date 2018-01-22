@@ -1,0 +1,41 @@
+what is an algorithm
+linear search
+binary search
+
+sorting algorithms
+
+what is a data structure?
+what is an abstract data type?
+array
+lists
+hash tables
+prefix tree
+adjacency matrix VS adjacency list
+
+regular expressions
+
+parsing
+    top-down; depth-first, breadth-first
+    CKY; dynamic programming
+
+pushdown automaton/RTN
+stack VS heap/queue
+
+xfst
+
+TAG, dependency graphs
+
+synchronous grammars, bimorphisms, inverted T-model
+
+Programming:
+    docstrings
+    type annotations
+    *
+    set, frozenset
+    Counter
+    Ordered Dictionary
+    mutable VS immutable
+
+tagging, stemming
+
+why morphology isn't really about surface forms, why analysis is important
