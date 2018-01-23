@@ -23,11 +23,11 @@
 
 \newenvironment{homework}[1][\unskip]{%
     \refstepcounter{homework}%
+    \medskip
     \noindent\ignorespaces%
-    \textbf{#1Homework \thehomework} \quad%
+    \textbf{\color[HTML]{2D68A2}[#1Exercise \thehomework]} \quad%
 }%
-{\par\noindent%
-    \ignorespacesafterend}
+{\medskip\par\noindent\ignorespacesafterend}
 
 \newcommand{\DangerSymbol}{\ensuremath{\skull}}
 \newcommand{\difficultsymbol}{\ensuremath{\skull}}
