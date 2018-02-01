@@ -39,7 +39,7 @@ Homeworks
 
 Each homework will be hosted in its own private repository. Only course participants have access to these repositories.
 
-[Homework 1](../../../homework1): not unlocked yet
+[Homework 1](../../../homework1): due Wed, Feb 07 @ 23:59pm
 
 
 Compilation Instructions
