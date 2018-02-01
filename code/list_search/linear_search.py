@@ -12,7 +12,7 @@ def linear_search(search_list, item):
     ----------
     search_list : list
         list to be searched
-    item
+    item : any
         item we are looking for
 
     Returns
