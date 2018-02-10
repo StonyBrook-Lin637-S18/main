@@ -167,6 +167,7 @@ Link List
 - A succinct yet extensive [tutorial for Python 3](http://www.python-course.eu/python3_course.php)
 - The official [Python 3 documentation](https://docs.python.org/3/)
 - [Automate the Boring Stuff with Python](https://automatetheboringstuff.com/) is an excellent introduction that covers the basics of Python and applies them to real-world tasks.
+- The [repository for LIN 120 *Language & Technology*](https://github.com/CompLab-StonyBrook/lin120_public) also contains Jupyter notebooks that cover the basics of Python, with an emphasis on programming techniques for computational linguistics.
 
 [department]: http://linguistics.stonybrook.edu
 [pdf]: ../../tree/master/pdf
