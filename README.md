@@ -79,15 +79,22 @@ Using the Virtual Machine Image
 
 ### Installing Software
 
-Additional software, such as Python packages, are installed from the command line with the command `sudo aptitude install PackageName`.
-This breaks down as follows:
+Additional software, such as Python packages, are installed from the command line.
+First we have to make sure we have the most current list of available software.
+So we run `sudo aptitude update`
 
 1. `sudo` means to execute the next command with administrator privileges.
 1. `aptitude` is the package manager that handles software installations.
+1. `update` tells aptitude to get the newest software list.
+
+After that, we can install any software with the command `sudo aptitude install PackageName`.
+Here `sudo` and `aptitude` have the same meaning as before.
+
 1. `install` tells *aptitude* that we want to install a package.
 1. `PackageName` is the name of the package.
 
 For example, to install *sympy* for Python 3 you would run `sudo aptitude install python3-sympy`.
+
 To find the correct package name, use `aptitude search string`, e.g. `aptitude search sympy`.
 Since this doesn't make any changes to the system, the command can be run without `sudo`.
 
