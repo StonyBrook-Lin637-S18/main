@@ -111,6 +111,9 @@ You'll have to install them yourself if you want the additional features.
     1. `sudo su` will promote you to administrator.
     1. Then type `sh VBoxLinuxAdditions.run`.
     1. Once the installation is done, reboot the VM.
+1.  To make sure that everything is installed correctly, open a terminal and run `lsmod | grep vboxguest`.
+    If you see a line mentioning `vboxguest`, everything worked as intended.
+    If there is no output at tall, something went wrong.
 
 
 Compilation Instructions
