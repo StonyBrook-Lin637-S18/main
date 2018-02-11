@@ -40,8 +40,8 @@ Homeworks
 
 Each homework will be hosted in its own private repository. Only course participants have access to these repositories.
 
-[Homework 1](../../../homework1): due Wed, Feb 07 @ 23:59pm
-[Homework 2](../../../homework2): due Sat, Feb 17 @ 23:59pm
+- [Homework 1](../../../homework1): due Wed, Feb 07 @ 23:59pm
+- [Homework 2](../../../homework2): due Sat, Feb 17 @ 23:59pm
 
 
 Using the Virtual Machine Image
