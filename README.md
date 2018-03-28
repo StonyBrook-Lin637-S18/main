@@ -46,6 +46,7 @@ Only course participants have access to these repositories.
 - [Homework 2](../../../homework2): due Sat, Feb 17 @ 23:59pm
 - [Homework 3](../../../homework3): due Sat, Feb 24 @ 23:59pm
 - [Homework 4](../../../homework4): due Sat, Mar 24 @ 23:59pm
+- [Homework 5](../../../homework5): due Wed, Apr 04 @ 23:59pm
 
 
 Compilation Instructions
