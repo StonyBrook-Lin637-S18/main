@@ -4,6 +4,16 @@
 \addto\captionsenglish{\renewcommand{\bibname}{References and Further Reading}}
 \def\thesection{\arabic{section}}
 
+\newcommand{\tikzload}[1]{%
+    \tikzsetnextfilename{#1}%
+    \input{./img/tikz/#1.tikz}%
+}
+
+\newcommand{\forestload}[1]{%
+    \tikzsetnextfilename{#1}%
+    \input{./img/tikz/#1.forest}%
+}
+
 \newcommand{\Note}[1]{\marginpar{\scriptsize #1}}
 \newcommand{\NoteNearNumbers}[1]{\marginpar[%
         \begin{tabular}{p{\marginparwidth-2em}r}
