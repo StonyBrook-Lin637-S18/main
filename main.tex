@@ -9,12 +9,12 @@
 \newcommand{\emailaddress}{lin637@thomasgraf.net}
 \newcommand{\coursenumber}{Lin 637}
 \newcommand{\coursename}{Computational Linguistics 2}
-\newcommand{\semester}{Spring 2018}
+\newcommand{\semester}{Spring 2019}
 \newcommand{\thetitle}{\texorpdfstring{%
             {\Huge \coursename}\\
             \semester}%
             {\coursename\ [\coursenumber, \semester]}}
-\newcommand{\thekeywords}{graduate level, lecture, computational linguistics, phonology, syntax}
+\newcommand{\thekeywords}{graduate level, lecture, computational linguistics, phonology, morphology, syntax}
 \newcommand{\thedate}{}
 
 \usepackage{mypackages}
@@ -31,8 +31,6 @@
 %=================================================================
 %			content
 %=================================================================
-\includeonly{./tex/formalization, ./tex/listphonology, ./tex/strictlylocal}
-
 \pagestyle{empty}
 \begin{document}
 \maketitle
@@ -42,7 +40,7 @@
 \clearpage
 
 \pagestyle{fancy}
-\include{./tex/syllabus}
+% \include{./tex/syllabus}
 \pagenumbering{arabic}
 
 \include{./tex/formalization}
@@ -65,5 +63,5 @@
 \include{./tex/epilogue}
 
 \bibliographystyle{./bib/linquiry3}
-\bibliography{./bib/lin637}
+\bibliography{./bib/universal,./bib/graf}
 \end{document}
