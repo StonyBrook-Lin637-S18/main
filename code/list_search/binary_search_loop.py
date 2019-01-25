@@ -6,7 +6,7 @@ import hypothesis.strategies as st
 
 
 def binary_search(search_list, item):
-    """Perform binary search for item in search_list.
+    """Use binary search to find position of item in search_list.
 
     This algorithm is more efficient than linear search,
     but only works for sorted lists!
@@ -34,7 +34,8 @@ def binary_search(search_list, item):
     end = len(search_list) - 1
 
     while start <= end:
-        # pick middle element of list
+        # pick middle element of list;
+        # we use int() for rounding down
         middle = int(start + (end - start)/2)
 
         # Case 1: our item is to the left of the item at the midpoint,
@@ -48,6 +49,7 @@ def binary_search(search_list, item):
         # Case 3: we found our item, return its index
         elif item == search_list[middle]:
             return middle
+    # Case 4: item not in list, while-loop aborted
     return False
 
 

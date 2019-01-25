@@ -6,7 +6,7 @@ import hypothesis.strategies as st
 
 
 def binary_search(search_list, item, start=0, end=None):
-    """Perform binary search for item in search_list[start:end].
+    """Use binary search to find position of item in search_list.
 
     This algorithm is more efficient than linear search,
     but only works for sorted lists!

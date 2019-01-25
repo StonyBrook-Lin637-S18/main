@@ -7,8 +7,8 @@
 \newcommand{\lastname}{Graf}
 \newcommand{\university}{Stony Brook University}	
 \newcommand{\emailaddress}{lin637@thomasgraf.net}
-\newcommand{\coursenumber}{Lin 637}
-\newcommand{\coursename}{Computational Linguistics 2}
+\newcommand{\coursenumber}{LIN 637}
+\newcommand{\coursename}{Computational Linguistics as Language Science}
 \newcommand{\semester}{Spring 2019}
 \newcommand{\thetitle}{\texorpdfstring{%
             {\Huge \coursename}\\
@@ -20,6 +20,8 @@
 \usepackage{mypackages}
 \usepackage{mycommands}
 
+\addbibresource{bib/graf.bib}
+\addbibresource{bib/universal.bib}
 
 %=================================================================
 %			title format
@@ -32,18 +34,30 @@
 %			content
 %=================================================================
 \pagestyle{empty}
+% \includeonly{./tex/preface,./tex/formalization}
+
 \begin{document}
 \maketitle
 \raggedbottom
 \pagenumbering{Roman}
+\pagestyle{fancy}
+
+\include{./tex/preface}
+\clearpage
+
+\shorttoc{Contents}{0}
+\clearpage
+
 \tableofcontents
 \clearpage
 
-\pagestyle{fancy}
 % \include{./tex/syllabus}
 \pagenumbering{arabic}
 
+
 \include{./tex/formalization}
+
+\part{Phonology}
 \include{./tex/listphonology}
 \include{./tex/strictlylocal}
 \include{./tex/sl-mathematics}
@@ -53,6 +67,8 @@
 \include{./tex/strictlypiecewise}
 \include{./tex/regular}
 \include{./tex/spe}
+
+\part{Morphology and Syntax}
 \include{./tex/morphology}
 \include{./tex/trees}
 \include{./tex/generativecapacity}
@@ -62,6 +78,6 @@
 \include{./tex/derivations}
 % \include{./tex/epilogue}
 
-\bibliographystyle{./bib/linquiry3}
-\bibliography{./bib/universal,./bib/graf}
+\printbibliography[heading=bibintoc]
+% \bibbysegment[heading=subbibliography]
 \end{document}

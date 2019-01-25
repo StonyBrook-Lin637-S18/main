@@ -1,0 +1,24 @@
+\begin{tikzpicture}[%
+    part/.style = {fill=blue!25, align=center, minimum height=2em}]
+
+    \node[part] (intro) at (0,0) {Introduction};
+    \node[part] (general) [below=of intro] {General discussion};
+    \node[part] (math) [right=8em of general.center] {Mathematically demanding parts};
+    \node[part] (sum) [below=of general] {Summary};
+    \node[part] (key) [above right=1.35em and 8em of sum.center] {Key insights};
+    \node[part] (lit) [right=8em of sum.center] {Literature discussion};
+    \node[part] (ex) [below right=1.35em and 8em of sum.center] {Theory exercises};
+    \node[part] (code) [below=of sum] {Code snippets and exercises};
+
+    \foreach \Source/\Target in {%
+        intro/general,
+        general/math,
+        general/sum,
+        sum/lit,
+        sum/code}
+        \draw[->] (\Source) to (\Target);
+
+    \draw[->] ($(sum.north east) - (.7em,0)$) |- (key);
+    \draw[->] ($(sum.south east) - (.7em,0)$) |- (ex);
+    \draw[->] ($(math.south east) - (2em,0)$) |- (ex);
+\end{tikzpicture}

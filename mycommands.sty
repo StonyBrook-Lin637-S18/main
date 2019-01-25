@@ -1,8 +1,21 @@
 \ProvidesPackage{mycommands}
 
 \addto\captionsenglish{\renewcommand{\chaptername}{Unit}}
-\addto\captionsenglish{\renewcommand{\bibname}{References and Further Reading}}
+\addto\captionsenglish{\renewcommand{\contentsname}{Contents (detailed)}}
+% \addto\captionsenglish{\renewcommand{\bibname}{References and Further Reading}}
 \def\thesection{\arabic{section}}
+\newenvironment{literature}{%
+    \subsection*{Relevant literature for
+              \chaptername~\thechapter}}{%
+    \printbibliography[heading=subbibliography,segment=\therefsegment]}
+
+\newcommand{\thexload}[1]{%
+    \input{./exercises/theory/#1.tex}
+}
+
+\newcommand{\cexload}[1]{%
+    \input{./exercises/coding/#1.tex}
+}
 
 \newcommand{\tikzload}[1]{%
     \tikzsetnextfilename{#1}%
@@ -31,13 +44,17 @@
 \newcounter{homework}[chapter]
 \def\thehomework{\thechapter.\arabic{homework}}
 
+\definecolor{exblue}{HTML}{2D68A2}
+
 \newenvironment{homework}[1][\unskip]{%
     \refstepcounter{homework}%
     \medskip
     \noindent\ignorespaces%
-    \textbf{\color[HTML]{2D68A2}[#1Exercise \thehomework]} \quad%
+    \textbf{\color{exblue}[Exercise \thehomework #1} \quad%
 }%
-{\medskip\par\noindent\ignorespacesafterend}
+% {\hfill \tikzset{external/export next=false}\tikz{\node[minimum size=.7em, inner sep=0pt, circle, fill=exblue] at (0,0) {};}}
+{\unskip\textbf{\color{exblue}]}%
+\medskip\par\noindent\ignorespacesafterend}
 
 \newcommand{\DangerSymbol}{\ensuremath{\skull}}
 \newcommand{\difficultsymbol}{\ensuremath{\skull}}
@@ -74,20 +91,6 @@
 \newcommand{\rdom}{\ensuremath{\triangleleft^*}}
 \newcommand{\outdom}{\ensuremath{\blacktriangleleft}}
 \newcommand{\word}[1]{\emph{#1}}
-
-% citations - various macros for citations
-% I got those from the class stylesheet of the Semantics & Pragmatics Open Publishing Journal;
-% see their guide for authors on how to put them to good use
-\newcommand{\posscitet}[1]{\citeauthor{#1}'s (\citeyear{#1})}
-\newcommand{\possciteauthor}[1]{\citeauthor{#1}'s}
-\newcommand{\pgposscitet}[2]{\citeauthor{#1}'s (\citeyear{#1}:~#2)}
-\newcommand{\secposscitet}[2]{\citeauthor{#1}'s (\citeyear{#1}:~$\S$#2)}
-\newcommand{\pgcitealt}[2]{\citealt{#1}:~#2}
-\newcommand{\seccitealt}[2]{\citealt{#1}:~$\S$#2}
-\newcommand{\pgcitep}[2]{(\citealt{#1}:~#2)}
-\newcommand{\seccitep}[2]{(\citealt{#1}:~$\S$#2)}
-\newcommand{\pgcitet}[2]{\citeauthor{#1} (\citeyear{#1}:~#2)}
-\newcommand{\seccitet}[2]{\citeauthor{#1} (\citeyear{#1}:~$\S$#2)}
 
 % example box environment
 \colorlet{exmp}{SeaGreen4}
@@ -216,6 +219,28 @@
 }
 {\endMakeFramed}
 
+\def\Peopleinfoframe#1{
+    \tikzset{external/export next=false}
+    \tikz{
+        \node[inner sep=10pt, inner ysep=20pt] (text) {#1};
+        \begin{pgfonlayer}{background}
+            \fill[Sepia!15,rounded corners] (text.north west) rectangle (text.south east);
+        \end{pgfonlayer}
+    }
+}
+
+\newenvironment{person}[2][\unskip]{%
+    \def\FrameCommand{\Peopleinfoframe}
+    \vskip\baselineskip
+    \MakeFramed {\FrameRestore}
+    \noindent\ignorespaces%
+    \tikzset{external/export next=false}%
+    \tikz\node[fill=Sepia,text=white,anchor=west,overlay,rounded corners]
+        at (0em,2.5em) {\textbf{#2} (#1)};%
+    \ignorespaces
+}
+{\endMakeFramed}
+
 
 
 \theoremstyle{plain}
@@ -310,9 +335,11 @@
 
 \newcommand{\BigO}{\ensuremath{O}}
 
-\definecolor{codebg}{rgb}{0.95,0.95,0.95}
+\definecolor{codebg}{rgb}{0.98,0.98,0.98}
+\setminted[python]{style=arduino}
 \newminted{python}{linenos,mathescape,gobble=4,fontsize=\footnotesize,bgcolor=codebg,samepage=false}
 \newmintedfile{python}{linenos,mathescape,fontsize=\footnotesize,bgcolor=codebg,samepage=false}
+\newmintinline{python}{}
 
 
 \newcommand{\LeftEdgeSymbol}{\ensuremath{\rtimes}}
@@ -472,3 +499,51 @@
 % Checkmark and cross; requires bbding
 \newcommand{\yes}{\checkmark}
 \newcommand{\no}{\XSolidBrush}
+
+
+% fancy quote environment with tikz
+\makeatletter
+
+\tikzset{%
+  fancy quotes/.style={
+    text width=\fq@width pt,
+    align=justify,
+    inner sep=1em,
+    anchor=north west,
+    minimum width=\linewidth,
+  },
+  fancy quotes width/.initial={.8\linewidth},
+  fancy quotes marks/.style={
+    scale=8,
+    text=gray!25,
+    inner sep=0pt,
+  },
+  fancy quotes opening/.style={
+    fancy quotes marks,
+  },
+  fancy quotes closing/.style={
+    fancy quotes marks,
+  },
+  fancy quotes background/.style={
+    show background rectangle,
+    inner frame xsep=0pt,
+    background rectangle/.style={
+      fill=white!25,
+      rounded corners,
+    },
+  }
+}
+
+\newenvironment{fancyquote}[1][]{%
+\noindent
+\tikzset{external/export next=false}
+\tikzpicture[fancy quotes background]
+\node[fancy quotes opening,anchor=north west] (fq@ul) at (0,0) {``};
+\tikz@scan@one@point\pgfutil@firstofone(fq@ul.east)
+\pgfmathsetmacro{\fq@width}{\linewidth - 2*\pgf@x}
+\node[fancy quotes,#1] (fq@txt) at (fq@ul.north west) \bgroup}
+{\egroup;
+\node[overlay,fancy quotes closing,anchor=east] at (fq@txt.south east) {''};
+\endtikzpicture}
+
+\makeatother

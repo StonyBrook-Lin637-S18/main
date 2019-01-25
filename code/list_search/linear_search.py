@@ -6,7 +6,7 @@ import hypothesis.strategies as st
 
 
 def linear_search(search_list, item):
-    """Search search_list from left to right for item.
+    """Left-to-right search for position of item in search_list.
 
     Parameters
     ----------
@@ -27,9 +27,12 @@ def linear_search(search_list, item):
     >>> linear_search([0,1,7,9], 8)
     False
     """
+    # iterate over all positions in the list
     for i in range(len(search_list)):
         if item == search_list[i]:
             return i
+    # if we made it this far,
+    # then we haven't found anything
     return False
 
 

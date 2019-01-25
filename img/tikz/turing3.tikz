@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+    \matrix (m) at (0,0) [matrix of nodes] {
+        0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+          &   &   & B \\
+    };
+
+    \begin{pgfonlayer}{background}
+        \draw[draw=blue!75,fill=blue!25,thick] (m-2-4.south west) rectangle (m-1-4.north east);
+    \end{pgfonlayer}
+\end{tikzpicture}

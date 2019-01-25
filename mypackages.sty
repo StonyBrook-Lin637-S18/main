@@ -11,23 +11,13 @@
 
 
 %=================================================================
-%			bibliography
-%=================================================================
-\usepackage{natbib}
-\bibpunct[:]{(}{)}{;}{a}{}{,}	% this command defines:
-                             	% pages delimiter, style for opening & closing bracket
-                                % reference delimiter, counter, space, and year delimiter
-% \usepackage[sectionbib]{chapterbib}
-
-
-%=================================================================
 %			fonts
 %=================================================================
 \usepackage[utf8]{inputenc}	% does not work with ð and þ; use \eth and \thorn instead
 \usepackage[T1]{fontenc}	% scalable EC fonts
 \usepackage{tipx}
 \usepackage[bitstream-charter]{mathdesign}% math fonts matched for charter, garamond, times, utopia
-\DeclareMathAlphabet{\mathsc}{T1}{mdbch}{m}{fsc}
+\DeclareMathAlphabet{\mathsc}{T1}{mdbch}{m}{fsc} % define mathscript font
 \usepackage{skull}  % for a dangerous skull
 \usepackage{bbding} % for checkmarks and failures
 \usepackage{pifont}
@@ -38,6 +28,30 @@
 \ifpdf
     \usepackage[kerning=true, draft=false]{microtype}
 \fi
+
+
+%=================================================================
+%			bibliography
+%=================================================================
+\usepackage[backend=biber,
+            bibstyle=biblatex-sp-unified,
+            citestyle=sp-authoryear-comp,
+            natbib=true,
+            refsegment=chapter]
+{biblatex}
+% don't put "in" in front of journal names
+\renewbibmacro{in:}{%
+    \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+% do not add any header for subbibliography;
+% look at mycommands.sty for the literature-environment instead
+\defbibheading{subbibliography}{}
+
+% \usepackage{natbib}
+% \usepackage[sectionbib]{natbib}
+% \bibpunct[:]{(}{)}{;}{a}{}{,}	% this command defines:
+                             	% pages delimiter, style for opening & closing bracket
+                                % reference delimiter, counter, space, and year delimiter
+% \usepackage{chapterbib}
 
 
 %=================================================================
@@ -81,7 +95,7 @@
 \usetikzlibrary{arrows,automata,backgrounds,calc,chains,decorations.pathmorphing,decorations.text,external,fadings,fit,matrix,scopes,shadows,shapes,spy,through,trees}
 \tikzexternalize[optimize=false]
 \tikzsetexternalprefix{./build/tikz/}
-\usepackage{forest}
+\usepackage[linguistics]{forest}
 
 \usepackage{marginnote}
 
@@ -106,11 +120,13 @@
 %			misc
 %=================================================================
 \usepackage{booktabs}
+\usepackage{wrapfig}
 \usepackage{mdwlist}
 \usepackage[titles]{tocloft}
 \usepackage{multirow}
 \usepackage{subcaption}
 \usepackage{xspace}
+\usepackage{shorttoc}
 
 %=================================================================
 %			programming
@@ -180,9 +196,9 @@
 			citecolor=theblue,%		color of links to bibliography
 			filecolor=theblue,%		color of file links
 			urlcolor=theblue,%		color of external links
-			pdfauthor={\theauthor},%	as specified by you in frame.tex
-			pdftitle={Local and Transderivational Constraints in Syntax and Semantics},%		as specified by you in frame.tex
-			pdfkeywords={\thekeywords}%	as specified by you in frame.tex
+			pdfauthor={\theauthor},%	as specified by you in main.tex
+			pdftitle={\coursename},%	as specified by you in main.tex
+			pdfkeywords={\thekeywords}%	as specified by you in main.tex
 		]{hyperref}%
 %
 % since hyperref links to captions, it links to the bottom of tables and figures;
