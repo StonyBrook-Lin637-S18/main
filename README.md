@@ -100,5 +100,5 @@ Link List
 [readings]: ../../../readings
 [sbu]: http://www.stonybrook.edu
 [survey]: https://testmoz.com/432409
-[syllabus]: ../../blob/master/pdf/0_syllabus.pdf?raw=true
+[syllabus]: ../../blob/master/pdf/00_syllabus.pdf?raw=true
 [vm]: https://drive.google.com/file/d/1ti5dhXh1ZzHKYa-dCHZtzI7WIapWPr2V/view?usp=sharing
