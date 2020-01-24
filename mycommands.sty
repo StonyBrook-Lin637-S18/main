@@ -4,10 +4,29 @@
 \addto\captionsenglish{\renewcommand{\contentsname}{Contents (detailed)}}
 % \addto\captionsenglish{\renewcommand{\bibname}{References and Further Reading}}
 \def\thesection{\arabic{section}}
+
 \newenvironment{literature}{%
-    \subsection*{Relevant literature for
-              \chaptername~\thechapter}}{%
-    \printbibliography[heading=subbibliography,segment=\therefsegment]}
+    \subsection{Relevant literature for
+              \chaptername~\thechapter}}{}%
+    % \printbibliography[heading=subbibliography,segment=\therefsegment]}
+
+\newenvironment{insights}{%
+    \subsection{Key insights for
+              \chaptername~\thechapter}}{}
+
+\newenvironment{exercises}{%
+    \def\thesection_store{\thesection}
+    \renewcommand{\thesection}{E}
+    \section{Exercises for
+             \chaptername~\thechapter}}{%
+    \def\thesection{\thesection_store}}
+
+\newenvironment{programming}{%
+    \def\thesection_store{\thesection}
+    \renewcommand{\thesection}{P}
+    \section{Programming}}{%
+    \def\thesection{\thesection_store}}
+
 
 \newcommand{\thexload}[1]{%
     \input{./exercises/theory/#1.tex}
@@ -15,6 +34,10 @@
 
 \newcommand{\cexload}[1]{%
     \input{./exercises/coding/#1.tex}
+}
+
+\newcommand{\mexload}[1]{%
+    \input{./exercises/math/#1.tex}
 }
 
 \newcommand{\tikzload}[1]{%
@@ -91,6 +114,10 @@
 \newcommand{\rdom}{\ensuremath{\triangleleft^*}}
 \newcommand{\outdom}{\ensuremath{\blacktriangleleft}}
 \newcommand{\word}[1]{\emph{#1}}
+
+% basic tikz styles
+\tikzset{larrow/.style = {-{Latex[length=.5em]}}}
+\tikzset{move/.style = {dashed,blue,larrow}}
 
 % example box environment
 \colorlet{exmp}{SeaGreen4}

@@ -1,5 +1,5 @@
 \chapter{Computation(al) linguistics}
-\label{cha:formal}
+\label{cha:Formal}
 
 Perhaps the most unfortunate fact about the field of computational linguistics is that its name is \emph{computational linguistics}.
 The term inherits a dichotomy that is hard to tease apart for the uninitiated: the distinction between computers and computing.
@@ -15,10 +15,10 @@ Computational linguistics as the study and design of language technology has bee
 
 But language technology isn't all there is to computational linguistics.
 Limiting the notion of computation to ``doing things with computers'' is doing it a great disservice.
-Similarly, the scope of computational linguistics goes far beyond computers.
+The scope of computational linguistics goes far beyond computers.
 It encompasses any object that is capable of computing, be it computers, the human brain, or abstract computing devices like the Turing machine, which isn't tied to a specific physical medium.
 With this general notion of computing, the goal is no longer to solve language-related tasks.
-No, language \textbf{is} the task: what does language look like from a computational perspective?
+No, \textbf{language is the task}: what does language look like from a computational perspective?
 
 % This probably sounds rather vague to, but it is not without merit.
 % Much like a physicist seeks a deeper understanding of the laws of the universe and thus opens up the road towards new technologies, the computational study of language can help with the more grounded concerns of making computers language-savvy.
@@ -26,14 +26,14 @@ No, language \textbf{is} the task: what does language look like from a computati
 The book you are holding in your hands (and, presumably, reading) is all about this broader notion of computational linguistics.
 For lack of a better term, I call this \emph{computation linguistics}.
 Its focus on understanding language makes computation linguistics a subfield of linguistics, even if its methods borrow heavily from theoretical computer science and mathematics (formal language theory, learnability, algebra, lattices, parsing theory, and so on).
-The remainder of this chapter tries to sharpen the profile of computation linguistics and how it differs from other varieties of computational linguistics.
+The remainder of this chapter sharpens the profile of computation linguistics and how it differs from other varieties of computational linguistics.
 I will also discuss why this approach is worth pursuing.
 The specific merits of computation linguistics depends a lot on whether you are a natural language engineer, a theoretical linguist, or a cognitive scientist.
 But rest assured, each group stands to gain something.
 
 One more remark: given its subject matter, this chapter is necessarily very meta-theoretic.
-If you would rather get right into the thicket of things, feel free to jump ahead to the next chapter.
-After all, the pudding is in the eating.
+If you would rather get right into the thicket of things, feel free to jump ahead to the next few chapters and come back later.
+A general sales pitch for computation linguistics is all nice and dandy, but the proof of the pudding is in the eating.
 
 
 \section{Computers vs computation}
@@ -54,6 +54,9 @@ The idea that the act of computation is about transitioning from one internal co
 % The Turing machine is named after Alan Turing (1912--1954), arguably one of the most brilliant and influential thinkers of the 20th century.
 % It is impossible to do Turing justice in a few sentences, so reading up on his many accomplishments is left as an exercise to the reader.
 It was first defined by Alan Turing in 1936 in his seminal paper \emph{On Computable Numbers, with an Application to the Entscheidungsproblem}.
+(To the select few readers whose German is a little rusty: \emph{Entscheidungsproblem} means \emph{decision problem}).
+If you understand how the Turing machine works, then you know why computation isn't tied to a specific hardware instantiation, be it electricity, steam, or the human brain.
+So let us take a closer look at the Turing machine.
 
 \begin{person}[1912--1954]{Alan Turing}
 Alan Turing was an English mathematician and polymath.
@@ -69,19 +72,24 @@ Turing was also an excellent long-distance runner, and was even a contender for 
 Turing's numerous accomplishments were not fully acknowledged during his lifetime, and as a homosexual he even faced criminal prosecution.
 In 1952, he was sentenced to undergo chemical castration treatment due to acts of ``gross indecency'' (i.e.~homosexual relations).
 Two years later he died of cyanide poisoning, presumably a suicide.
+
+Turing's dead body was found next to a half-eaten apple.
+For this reason, it has been rumored that the original, rainbow-colored Apple logo is a tribute to Alan Turing and his tragic death due to the British prosecution of homosexuals.
+However, Apple co-founder Steve Wozniak has called this an urban legend.
 \end{person}
 
-It is astounding how much a Turing machine can accomplish even though it consists of only three components:
+The Turing machine is now widely considered to establish a firm upper bound on what can be computed in a mechanical fashion.
+This is astounding considering that a Turing machine consists of only three components:
 %
 \begin{enumerate}
-    \item a rewritable and extendable tape that acts as a general data storage, and
+    \item a tape that acts as a rewritable and infinitely extendable data storage, and
     \item a read/write head that can modify the tape, and
     \item a state register that controls the behavior of the machine.
 \end{enumerate}
 %
-The read/write head can move to any position on the tape, read the symbol that is there, and possibly overwrite it with a new symbol.
+The tape is a linear arrangement of cells, and each cell stores at most one symbol.
+The read/write head can move to any cell on the tape, read the symbol in that cell, and possibly overwrite it with a new symbol.
 The state register is like a knob that can be in one of finitely many positions, e.g.\ 7 out of 10 on a volume dial.
-The purpose of the state register is to control the behavior of the Turing machine.
 Based on the symbol that is currently under the read/write head and the state of the register, the Turing machine consecutively executes three specific operations: 
 %
 \begin{enumerate}
@@ -115,18 +123,18 @@ A finite collection of such instructions is a program that can be run on a Turin
     % 
     This looks fairly cryptic, so let us tease apart what is going on here.
 
-    Each individual instruction is easy enough to decypher.
     The machine has 6 different states: A, B, C, D, E, and F\@.
     Only two kinds of symbols are used on the tape, 0 and 1.
-    A command like write(1) means that the machine writes a 1 onto the tape, whereas the arrows $\Leftarrow$ and $\Rightarrow$ specify that the machine moves one symbol to the left or one symbol to the right after the write action is finished.
+    A command like write(1) means that the machine fills the current cell on the tape with a 1, whereas the arrows $\Leftarrow$ and $\Rightarrow$ specify that the machine moves one cell to the left or one cell to the right after the write action is finished.
     So line 5, for example, tells us that if the machine is in state C and has a 0 under its read/write head, it writes a 1, moves to the next symbol to the right, and switches into state D.
 
-    That is all nice and dandy, but what is it the program does?
+    That's terrific, but what is that good for?
+    What does the program do?
     So far this feels like a badly written instruction manual where each individual sentence makes sense but you can't figure out how they fit together (very much \textbf{un}like this book, I hope).
     Let us boost our understanding of the program by working through a concrete example.
 
     Suppose that the machine starts in the following configuration: 
-    The tape consists mostly of 0s, except for two adjacent 1s, and the read-write head is positioned on the right 1, with the state register in state A.
+    The tape consists mostly of 0s, except for two adjacent 1s, and the read-write head is positioned on the rightmost 1, with the state register in state A.
     This is visualized below.
     %
     \begin{center}
@@ -142,18 +150,19 @@ A finite collection of such instructions is a program that can be run on a Turin
     \end{center}
     %
     Since the read/write head is now over a 1 while the machine is in state B, the instruction on line 4 is triggered: the machine keeps the current symbol as is, moves to the left, and keeps the register in state B\@.
+    No change is made to the tape.
     %
     \begin{center}
         \tikzload{turing3}
     \end{center}
     %
-    This in turn triggers the third instruction, which tells the machine not to perform any write action, move one symbol to the left, and switch the register to state C\@. 
+    This new configuration triggers the third instruction, which tells the machine not to perform any write action, move one symbol to the left, and switch the register to state C\@. 
     %
     \begin{center}
         \tikzload{turing4}
     \end{center}
     %
-    The rest of the computation then proceeds as depicted below:
+    The rest of the computation then proceeds as depicted below, which changes to the tape once again highlighted in boldface:
     %
     \begin{center}
         \tikzload{turing5}
@@ -180,9 +189,10 @@ A finite collection of such instructions is a program that can be run on a Turin
 
         \tikzload{turing16}
     \end{center}
-    
+    % 
     The F state is special because it does not trigger any new instructions, so the machine halts once it reaches this state.
-    Looking at the result of the individual steps, we can now make sense of the instructions at the beginning of this example.
+
+    Looking at the final outcome of the individual steps, we can now make sense of the instructions at the beginning of this example.
     Put together, they program the Turing machine so that it copies sequences of 1s.
     If the tape had contained 11111 instead of 11, the final output would have contained two instances of 11111.
     That's longer than the tape in our example, but remember that the tape of a Turing machine can always be extended as necessary.
@@ -247,10 +257,10 @@ Clearly a dog and a human are two very different things, but it changes nothing 
 No matter how we set things up, the same input will always be transformed into the same output.
 Shot glasses, bowls, M\&Ms, humans, dogs, it does not matter, we always end up copying the input.
 
-Silly as these examples may be, the central point stands: changes to the physical make-up of the device that carries out the computation does not entail changes to the computation itself.
+Silly as these examples may be, the central point stands: making changes to the physical make-up of the device that carries out the computation does not entail making changes to the computation itself.
 The notion of computation operates at a higher level of abstraction, and that is what gives it such a unifying power.
 We can take computational concepts and apply them to systems that do not at all look like the computers we are familiar with: the human brain, the biological mechanisms of gene expression, even the universe itself.
-Despite the differences in physical substrates, structural changes, and sheer computing power, they are all equally valid examples of computing devices and we can  discover interesting things about them by adopting this perspective.
+Despite the differences in physical substrates, structural changes, and sheer computing speed, they are all equally valid examples of computing devices and we can  discover interesting things about them by adopting this perspective.
 
 Hopefully you can now appreciate why it is unfortunate that the term \emph{computational linguistics} does not clearly disambiguate between computation and computers.
 % \Note{At least it is better than the German term \emph{Computerlinguistik}, which can only have the second meaning when interpreted compositionally.}
@@ -261,7 +271,7 @@ In the spirit of learning from nature, we would do well to study language at a l
 To clearly differentiate the two notions of computational linguistics, I will use \emph{natural language processing} (NLP) in this book to refer to those aspects of computational linguistics that are solely concerned with computers.
 NLP is about solving language-related tasks with computers, e.g.~speech synthesis, machine translation, or even the basic search function in your text editor.
 Computation linguistics is about studying language as an instance of computation.
-Both NLP and computation linguistics belong to the larger field of computational linguistics, but they differ largely in their goals and also somewhat in their methods.
+Both NLP and computation linguistics belong to the larger field of computational linguistics, but they differ in their goals and in their methods.
 
 % Parental advisory: a beverage with high alcohol content may cause premature failure of the experiment.
 % The same computation will look very different when executed by a human brain, with neurons firing in a specific cascade that gives rise to a three-dimensional activation pattern.
@@ -290,9 +300,9 @@ But there are good arguments for computation linguistics, and they range from re
 
 Let us first look at an argument that seems plausible, but ends up running into several issues.
 % It seems fairly easy to make a case for the importance of studying computational aspects of language (putting aside for now what exactly we mean by that). 
-The argument starts with the plausible assumption that a world in which computers can successfully handle all kinds of language-related tasks is preferable to one where they cannot.
+The argument starts with the reasonable assumption that a world in which computers can successfully handle all kinds of language-related tasks is preferable to one where they cannot.
 This would create a second industrial revolution that boldly pushes automation into language-heavy domains: customer service and speech-driven user interfaces, language and writing instruction, knowledge aggregation, and much more.
-Admittedly there is also the risk of mass surveillance, mass unemployment, and the social upheavals that tend to follow both, but there is reason to believe that those would just be short-term growing pains on the way to a more prosperous future.
+Admittedly there is also the risk of mass surveillance, mass unemployment, and the social upheavals that tend to follow both, but let's assume that those would just be short-term growing pains on the way to a more prosperous future.
 If this is correct, then it is imperative that we do whatever we can to get computers to this level of aptitude.
 And just like some understanding of physics had to be in place before engineers could bless mankind with the radio or the combustion engine, we cannot have successful NLP applications without a minimum understanding of language and the computational challenges it poses.
 Computation linguistics thus is a prerequisite for NLP\@.
@@ -339,7 +349,7 @@ Consider the case of a 2013 study that evaluated various text-based models for p
 Naively, one would expect that a novel's success is largely dependent on its writing style, narrative structure, and subject matter.
 Yet one of the best models completely ignored those aspects and focused exclusively on word frequencies.
 As it turns out, successful novels have an unusually high frequency of thought-oriented verbs like \emph{recognize} and \emph{remember}.
-A model that pays attention to such word frequency effects can even perform better than one that also analyzes the minute structural intricacies that linguists care about.
+A model that only pays attention to such word frequency effects performs better than one that also analyzes the minute structural intricacies that linguists care about.
 
 It seems, then, that there is a shockingly large gap between ``language as a computational problem'' and ``computers solving natural language tasks''.
 The latter is doing just fine without the former, and in some cases theory may even make things worse for practical applications.
@@ -390,7 +400,7 @@ A simple request, it seems, but it is actually bursting with linguistic complexi
     \item ``I want'':
             So the computer should make sure that the files end up looking like what the user has in mind, even though the user isn't explicitly issuing a command.
     \item ``each filename'':
-            Actually the user wants only image files like JPGs or PNGs to be renamed, whereas the doc-file that they randomly dropped in there should be left alone.
+            Actually the user wants only image files like JPGs or PNGs to be renamed, whereas the PDF that they randomly dropped in there should be left alone.
     \item ``start with the date'':
             Dates can be formatted in various ways.
             Can we make a reasonable guess about what format the user wants?
@@ -408,7 +418,7 @@ A simple request, it seems, but it is actually bursting with linguistic complexi
             Probably the one that is being renamed, but again this restriction is left implicit.
 \end{enumerate}
 %
-In our amazement that computers seem to accomplish super-human feats such as translating a website in a split-second, we tend to forget that most of the language-related tasks that even 5-year olds solve with ease still pose insurmountable challenges for computers.
+In our amazement that computers seem to accomplish super-human feats such as translating a website in a split-second, we tend to forget that they still struggle with language-related tasks that even a 5-year old would solve with ease.
 Once one broadens the horizon from what NLP is currently working on to what NLP could be working on, the importance of computation linguistics becomes much more apparent.
 
 In a certain sense this holds even if one considers only those areas where NLP has been successful.
@@ -428,19 +438,19 @@ Each day, children in linguistic communities of all shapes and sizes effortlessl
 In fact, children are amazing language learners and frequently generalize in ways that go far beyond what the data provides.
 This is what linguists call the \emph{poverty of stimulus}: even though the linguistic input children get is very limited, they infer a lot more from it than would be possible just via raw statistics. 
 How exactly children manage to do this is still very much an open issue, in particular on the computational level.
-But the more our knowledge advances on this front, the less data future models will need, thereby shrinking the gap between resource-poor and resource-rich languages.
+But the more our knowledge advances on this front, the less data our models will need, thereby shrinking the gap between resource-poor and resource-rich languages.
 
 It is also worth noting that the performance of NLP models should not be taken at face value because it is based on a particular notion of performance.
 The NLP community has devised numerous quantitative metrics for benchmarking its models.
 But these benchmarks have several blind spots in their design.
 For one thing, they only measure how many errors a model makes, rather than how grave the errors are.
-Suppose you have to evaluate how well two children --- let's call them Shorty and Cat --- have mastered basic addition.
+Suppose you have to evaluate how well two children --- let's call them Shorty and Luna --- have mastered basic addition.
 The table below shows your questions and their respective answers.
 %
 \begin{center}
     \begin{tabular}{rcc}
         \toprule
-        \textbf{Question} & \textbf{Shorty} & \textbf{Cat}\\
+        \textbf{Question} & \textbf{Shorty} & \textbf{Luna}\\
         \midrule
         What is 3+4? & 6 & 7\\
         What is 6+3? & 9 & 9\\
@@ -455,16 +465,16 @@ But every teacher will tell you that Shorty has a better grasp of addition than 
 Yes, Shorty is short by 1 when adding up 3 and 4.
 But once you take that mistake into account, all the other answers make sense.
 In particular, under Shorty's mistaken assumption that $3 + 4 = 6$, it is necessarily the case that $3 + 4 + 3 = 6 + 3 = 9$.
-Cat, on the other hand, missed this important generalization and gives a very puzzling answer to the last question.
-Instead of adding, Cat suddenly concatenates the numbers.
+Luna, on the other hand, missed this important generalization and gives a very puzzling answer to the last question.
+Instead of adding, Luna suddenly concatenates the numbers.
 That is extremely bewildering, and a teacher who only evaluates students based on how many answers they get wrong would miss this.
 
 You might object that the problem here isn't with counting the number of mistakes, but rather with the small number of questions we asked.
-If we had asked more questions of the form $3 + 4 + 3$, Cat would have done worse than Shorty.
+If we had asked more questions of the form $3 + 4 + 3$, Luna would have done worse than Shorty.
 You are correct, and this is also the answer you will hear in NLP.
 NLP models are tested on millions of sentences, which the example above obviously does not do justice to.
-But the size of a test sample is no solid indicator of its quality.
-What if Cat's problem only occurs with sequences of addition of the form $n + (n - 1) + n$?
+But the size of a test sample isn't a solid indicator of its quality.
+What if Luna's problem only occurs with sequences of addition of the form $n + (n + 1) + n$?
 Even in a test set with millions of questions, this pattern might be fairly rare, whereas Shorty's problem with adding $3$ and $4$ might crop over and over again.
 With addition it is fairly easy to design a balanced test set, but with language NLP engineers rely largely on the data that is freely available in the wild.
 This includes tweets, posts on message boards, news paper articles, and so on.
@@ -472,13 +482,13 @@ Linguists have argued for a long time that these samples are not representative 
 The most intricate aspects of language tend to reveal themselves only rarely, but when they do they are of great importance.
 
 As a result, NLP performance metrics should be taken with a grain of salt.
-Yes, model A might outperform model B by 10 percentage points in your benchmark.
+Yes, model A might outperform model B by 10 points in your benchmark.
 But model B might still make a better impression on users because its errors aren't nearly as serious or puzzling as those made by model A\@.
 When interacting with humans, slightly wrong beats really wrong, and wrong beats weird.
 
 Such qualitative performance metrics are still sorely missing in NLP.
 A good theoretical grounding --- where ``theory'' subsumes both theoretical linguistics and the theory of computation --- is a guide through those areas of language where data is insufficient.
-The more language-like a model, the less data it needs to display language-like behavior.
+The more language-like a model, the less data it should need to display language-like behavior.
 
 In sum, then, NLP approaches still have their fair share of shortcomings that insights from computation linguistics can help address.
 As NLP moves into increasingly complex domains of language, with increasingly impoverished data, the use of a strong theoretical foundation will become increasingly apparent.
@@ -487,32 +497,34 @@ As NLP moves into increasingly complex domains of language, with increasingly im
 \subsubsection{An example from the history of computational linguistics}
 \label{sub:formal_arguments_practical_history}
 
-Overall, then, there is definite potential for improving NLP with rich computational theories of natural language.
-A brief look at the history of computational linguistics furnishes multiple examples of that.
+You might still be skeptical.
+All I have done is point out some shortcomings of the current NLP approaches that could potentially benefit from computation linguistics.
+I still owe you a concrete example of a fruitful transfer of knowledge.
+Fair enough, so here we go:
 
 Consider the problem of word structure, which linguists call \emph{morphology}.
 A native speaker of English knows that \emph{liked} is the combination of the verb \emph{like} and a past tense marker, and in the other direction he or she also knows that the addition of a past tense marker turns \emph{walk} into \emph{walked}, \emph{run} into \emph{ran}, and \emph{go} into \emph{went}.
-Linguists have collected a detailed inventory of morphological processes, and computational linguists have developed the framework of finite-state morphology to model these processes. 
+Linguists have collected a detailed inventory of morphological processes, and computational linguists have developed the framework of \emph{finite-state morphology} to model these processes. 
 % Two-level morphology, in turn, was grounded in the theory of finite-state machines, which are a staple of computer science.
 These two steps did not take place independently of each other.
 The crucial contribution of linguists was to point out that the range of possible morphological processes is very limited.
 Once computational linguists saw what is (im)possible in morphology, they realized that almost all the processes are very simple and can be captured with very restricted tools that are still very flexible and scalable, which is exactly what one wants for practical purposes.
 Nowadays, finite-state machinery is still used for modeling specific aspects of morphology, e.g.~number systems.
-The ideas have undergone a voyage from theoretical linguistics to computation linguists to NLP, where they have proven tremendously useful for over 30 years now.
+This is a domain where good data is scarce and mistakes can have severe consequences --- there's a big difference between transferring \$23.45 and \$2,345.
+The linguistic insights have undergone a voyage from theoretical linguistics to computation linguists to NLP, where they have proven tremendously useful for over 30 years now.
 But insights have also traveled in the other direction.
-A few processes in morphology that involve copying pose serious challenges to finite-state morphology, highlighting the need for a better understanding of these phenomena.
+A few processes in morphology that involve copying pose serious challenges to finite-state morphology, highlighting the need for a better linguistic understanding of these phenomena.
 This way theoretical and computational linguists feed each other's research, with NLP as the happy consumer of the final results.
 
 % Admittedly not all examples work out as nicely as the one above.
 % In many cases the insights of computation linguistics tend to be grounded in pure math rather than linguistic fieldwork or analysis.
-Sometimes the transmission of insights is almost imperceptibly indirect, and is easily lost in fogs of history.
-Formal language theory --- which is still an integral part of computational linguistics but also indispensable for the design of programming languages and file standards like XML --- grew out of Noam Chomsky's linguistic theories of natural language.
-Chomsky's Transformational grammar also served as an important inspiration for William Rounds's work on tree transducers, and those are now used in machine translation (outside of computational linguistics, they are also heavily used in compiler design, which one may regard as machine translation for programming languages).
-The computational linguist Aravind Joshi relied on key insights about the nature of language when he developed Tree Adjoining Grammars (TAG), which are still highly influential and have even been used to model biological structures such as messenger RNA\@.
-The same can be said about the formalism of \emph{Combinatory Categorial Grammar}, which is equally driven by engineering concerns and pure linguistic theory.
+Sometimes the transmission of insights is almost imperceptibly indirect, and is easily lost in the fog of history.
+Formal language theory --- which is an integral part of computation linguistics but also indispensable for the design of programming languages and file standards like XML --- grew out of Noam Chomsky's linguistic theories of natural language.
+Chomsky's Transformational grammar also served as an important inspiration for William Rounds's work on tree transducers, and those are now used in machine translation and compiler design, the latter being indispensable for modern programming languages.
+The computational linguist Aravind Joshi relied on key insights about the nature of language when he developed \emph{Tree Adjoining Grammars} (TAG), which then found applications in modeling biochemical structures such as messenger RNA\@.
+The formalism of \emph{Combinatory Categorial Grammar}, which is equally driven by engineering concerns and pure linguistic theory, has been used in studying the structure of music.
 As you can see, there is no telling how fields will cross-fertilize each other as their ideas and insights slowly transgress disciplinary boundaries.
-But one can certainly tell that his has happened numerous times between computation linguistics and NLP.
-The claim that NLP is doing perfectly well on its own and could not possibly benefit from computation linguistics does not hold up to scrutiny.
+But there are concrete cases of such exchange between computational linguistics and numerous other fields, including NLP\@.
 
 \subsubsection{Interim Summary}
 \label{sub:formal_arguments_practical_summary}
@@ -522,20 +534,21 @@ This holds whether the theory is grounded in mathematics, computer science, or l
 The value of theory is not constant across all applications.
 Hard problems tend to benefit more than easy ones.
 It also depends on the quantity and quality of available data, and the need for strong safeties --- minor mistranslations are acceptable for a blog post, but not in a business contract.
-But it is also important that the problem is well-defined --- if it isn't even clear what exactly the problem is, theory will be of very limited use.
-This is why Twitter-based mental health assessment requires a healthy dose of opportunistic trial-and-error with all available tools, whereas computational morphology, for instance, benefits a lot from a good theoretical foundation.
-So no, computation linguistics isn't the magic bullet for solving NLP, but it has valuable contributions to make in key areas.
+But it is also important that the problem is well-defined.
+If it isn't even clear what exactly the problem is, theory will be of very limited use.
+This is why Twitter-based mental health assessment requires a healthy dose of opportunistic trial-and-error with all available tools, whereas computational morphology benefits a lot from a good theoretical foundation.
+So, no, computation linguistics isn't the magic bullet for solving all of NLP's woes, but it has valuable contributions to make in key areas.
 These key areas may well become the central focus of attention soon.
 If the current staples of NLP end up being subsumed by general purpose machine learning techniques, we may see the field move towards harder problems that are ripe with language-specific issues.
 
 \subsection{Scientific arguments}
 \label{ssec:formal_arguments_science}
 
-The previous section has defended computation linguistics in terms of its utility for NLP\@. 
+The previous section defends computation linguistics in terms of its utility for NLP\@. 
 These utilitarian arguments are needed to convince politicians, taxpayers, and engineers.
 But they hold no sway in the court of science.
 A linguist might shrug at the arguments above on a good day and publicly denounce us as nimrods on a bad one.
-If computation linguistics can somehow get NLP to incorporate more linguistic insights, that's nice and dandy.
+If computation linguistics can somehow get NLP to incorporate more linguistic insights, that's nice.
 It probably won't tell us much about language, though.
 So it won't improve linguistics, psychology or cognitive science.
 Fortunately, the scientific merit of computation linguistics is a lot more clear-cut than the utilitarian argument: since language is intrinsically a computational problem, studying language from a computationally informed perspective is only natural.
@@ -575,7 +588,11 @@ A native speaker of English, for instance, recognizes that in the two sentences 
 The first question has two meanings, paraphrased as ``Who is such that you want them to leave?'' and ``Who is such that you want to leave them?'', respectively.
 The second question only allows the latter interpretation.
 Competence describes the implicit knowledge of a speaker that is needed for him or her to recognize such a contrast.
-But the actual process of bringing competence to bear on these questions is a much more involved matter, and that is what performance is about.
+But the actual process of bringing competence to bear on these questions is a much more involved matter.
+That's what performance is about.
+% When you hear those questions in a bar, how do you filter out all the background noise, how do you break up the sound waves into words, how do you hold them in memory, how do you find all the possible readings given the rules of English, and how do you know which interpretation is the intended one?
+% Those are all interesting questions, but they are beyond competence.
+% They are what performance is about.
 % It involves reading the questions, assigning them specific structures, and mapping these structures to interpretations.
 
 Somewhat sloppily, one could describe competence as ``language modulo the resource restrictions on working memory and attention span''.
@@ -586,7 +603,7 @@ Nonetheless complexity theory has produced results that are also relevant in pra
 Competence questions in linguistics have similarly shed light on language despite their high level of abstraction.
 
 Since competence cannot be directly observed, research into how language is computed usually operates in the realm of performance.
-Linguists approach this questions through the lens of neuroscience and psychology: how does the wetware behave when carrying out specific linguistic tasks, and can we design a procedure that mimics humans' behavior?
+Linguists approach this question through the lens of neuroscience and psychology: how does the wetware behave when carrying out specific linguistic tasks, and can we design a procedure that mimics humans' behavior?
 For example, native speakers of English usually have no problem understanding English sentences, it is an incredibly fast and effortless process.
 But it does exhibit surprising quirks.
 When asked whether the sentence \eqref{ex:Formal_GardenPath} is grammatically correct, native speakers usually say no.
@@ -601,7 +618,7 @@ However, the sentence is actually well-formed, it has the same structure as the 
     \ex The player thrown a frisbee smiled.\label{ex:Formal_Non-GardenPath}
 \end{exe}
 %
-For some reason the algorithm native speakers of English use has no problem with \eqref{ex:Formal_Non-GardenPath} but is completely thrown off by the exchange of a single word that serves exactly the same grammatical function.
+For some reason the algorithm native speakers of English use has no problem with \eqref{ex:Formal_Non-GardenPath} but is thrown off track in \eqref{ex:Formal_GardenPath} which differs in only a single word that serves exactly the same grammatical function.
 This is almost like a computer that can compute $1 + 2$ but not $2 + 1$.
 There is no obvious reason for this behavior, and it doesn't exactly look like good engineering (so much for Intelligent Design).
 Linguists have come up with various elaborate explanations of such phenomena over the years --- some more successful than others ---
@@ -613,7 +630,7 @@ Where the reach of these approaches ends, the realm of computation linguistics b
 
 Neuroscience has made tremendous progress in the last few decades, and as a result there has also been increased interest in neurolinguistics.
 As in many other areas of neuroscience, the hope is that the ``code'' of the human brain will reveal itself through its wetware.
-Know the hardware, and you know the software; unfortunately, things are not that straight-forward.
+Know the hardware, and you'll know the software; unfortunately, things are not that straight-forward.
 
 It is certainly interesting to see how the human brain works on the hardware level.
 But it is far from obvious that this tells us much about the actual computations.
@@ -629,9 +646,9 @@ But that is still very inconclusive, for various reasons.
 First of all, a higher load on the graphics chip might indicate that some kind of 3D graphics is being rendered, e.g.~for a video game.
 Actually, though, a lot of non-graphical tasks are outsourced from the processor to the graphics chip nowadays.
 This is why the acronym GPU, which stands for \emph{Graphics Processing Unit}, has been extended to GPGPU, which is short for \emph{General Purpose Computing on GPUs}.
-Among other things, GPUs are now commonly used in the training of neural networks, which at an intuitive level has very little to do with graphics rendering.
-Mathematically, the differences are less pronounced.
-This is exactly why it is difficult to draw conclusions from hardware to software --- the former is capable of a lot more than one would naively assume.
+Among other things, GPUs are now commonly used in machine learning tasks.
+Content-wise, this has very little to do with graphics rendering, but the mathematics are actually fairly similar.
+This is one reason why it is difficult to draw conclusions from hardware to software --- two very different domains A and B can instantiate very similar computational problems, so that a device that looks like it is computing A might actually be computing B\@.
 
 A curious example of this principle is the first-person shooter \emph{Doom}, well-known for its high-adrenaline gameplay and impressive music.
 When this classic video game was ported from PC to Atari's \emph{Jaguar} console, buyers and reviewers alike lamented the lack of any in-game music.
@@ -751,7 +768,7 @@ But again there are certain limitations that computation linguistics can help ad
 One central issue is again a granularity mismatch between the explanandum --- language as a cognitive ability --- and the means of explanation.
 Psycholinguistic models can be highly specific in what cognitive parameters they presuppose.
 %
-\begin{examplebox}{A psycholinguistic account of priming}
+\begin{examplebox}[A psycholinguistic account of priming]
     A common assumption in the literature is that humans use \emph{content addressable memory} (CAM).
     CAM operates very differently from a computer's \emph{random accessible memory} (RAM).
     RAM is similar to a very long street where one can instantaneously travel to any house as long as one knows its house number.
@@ -764,24 +781,25 @@ Psycholinguistic models can be highly specific in what cognitive parameters they
     Psycholinguists couple CAM with certain models of memory activation and retrieval to explain specific aspects of human cognition, e.g.~that memory retrieval for item X takes less time if a content-related item Y already had to be retrieved immediately before (this is known as \emph{priming}).
 \end{examplebox}
 %
-A very extreme case of this is the ACT-R framework, an elaborate computer model of human cognition.
+A very extreme case of psychologists and psycholinguists making highly specific assumptions is the ACT-R framework.
+ACT-R provides an elaborate computer model of human cognition.
 The specificity of ACT-R allows researcher to run detailed simulations and tweak parameters to find the best fit for experimental data.
 ACT-R is an impressive achievement, but it is a machine with many turning cogs and gears.
 This makes it difficult to ascertain what each component contributes to the final result.
-This has to downsides.
+This has two downsides.
 First, the findings aren't as insightful as one might hope.
 Simulations may tell us that configuration X accounts for the facts, but what about X$'$ or X$''$?
 Do we need all the components interacting in this specific manner, or are most assumptions dispensable except for maybe one or two?
 
 You may think that we can answer this by just running additional simulations with other parameter values.
 But this is often not practically feasible due to combinatorial explosion.
-If your model has 10 binary parameters, then there are $2^10 = 1024$ different instantiations of the model.
+If your model has 10 binary parameters, then there are $2^{10} = 1024$ different instantiations of the model.
 Even if your simulation takes only half an hour to complete, you're already looking at $512$ hours, which is over three weeks.
 In practice, your model will take longer to run and have many more parameters to tweak, so exhaustive simulation of all options isn't feasible.
-Computation linguistics, on the other hand, has the advantage that its concepts, while abstract, are sufficiently simple to be explored from a mathematical perspective using little more than pen and paper.
+Computation linguistics, on the other hand, has the advantage that its concepts, albeit abstract, are sufficiently simple to be explored from a mathematical perspective using little more than pen and paper.
 While this certainly poses its own challenges, it often takes much less time and effort than designing models and running simulations.
 
-Putting aside the time investment factor, though, we are still left with the problem that one cannot generalize from modeling results in a monotonic fashion.
+Putting aside the time investment factor, we are still left with the problem that one cannot generalize from modeling results in a monotonic fashion.
 That model M captures phenomenon P does not entail that it also accounts for phenomenon P$'$.
 Once we make tweaks to account for P$'$, we have to rerun our simulations for P to ensure that everything still works as desired.
 The mathematical approach favored by computation linguistics, on the other hand, provides crucial clues under which conditions key properties are preserved, and this makes it easier to make inferences from P to P$'$.
@@ -861,8 +879,8 @@ They proposed that computational processes, including cognition, should be descr
         \item On a computational level, that program is easily specified: it takes two sets as input and returns their intersection ($A \cap B$ in mathematical notation).
         \item On the algorithmic level, things get trickier.
         For instance, do you want to store the sets as lists or something else, and just how does one actually construct an object that is the intersection of two sets?
-    \item On the physical level, finally, things are so complicated that it is nigh impossible to tell what exactly is being computed by the machine.
-        Voltages increase or decrease in various transistors spread over the CPU, memory and mainboard, and that's about all you can make out.
+    \item On the physical level, finally, things are so complicated that it is nigh impossible to tell what exactly is being computed.
+        In your laptop, voltages increase or decrease in various transistors spread over the CPU, memory and mainboard, and that's about all you can make out.
         In the human brain, neurons are firing in intricate patterns that somehow give rise to the desired output.
         Unless you already have a good idea of the higher levels and the computational process being carried out, it is probably hopeless to reverse engineer the program from the physical evidence.
     \end{itemize}\label{ex:formal_intersection}
@@ -918,24 +936,26 @@ If some of the material covered in this book seems overwhelming to you and makes
 \section{Summary}
 \label{sec:formal_summary}
 
-\begin{enumerate}
-    \item \textbf{Computation} and computers are not the same.
-          Computation is an abstract concept that can be instantiated by various objects, including non-existing ones.
-          Computers are one such object, but so is the human brain, a cell, or a line of water buckets when manipulated appropriately.
-    \item \textbf{Turing machines} show how little is needed to carry out very complex computations.
-          A movable read-write head, a state register, and an unlimited tape are sufficient to solve even the most complex computations.
-          But figuring out the correct set of instructions may be hard.
-    \item \textbf{Natural language processing} (NLP) is focused on solving language-related tasks with computers.
-          A different aspect of computational linguistics (which I call \textbf{computation linguistics} for lack of a better term) instead seeks to study language as a computational problem.
-          This is the approach presented in this textbook.
-    \item A cognitive system like language can be described on \textbf{Marr's three levels of description}.
-          These are, in increasing order of detail: \emph{computational}, \emph{algorithmic}, and \emph{physical}.
-          The computational level allows us to abstract away from many details that are irrelevant for the issues linguists care about.
-    \item Abstraction is a virtue.
-          It allows for profound insights and succinct generalizations that could not be stated at more fine-grained levels.
-    \item Neurolinguistics and psycholinguistics operate at less abstracted levels, as do approaches based on computational modeling.
-          Each one has valuable contributions to make, but integrating insights from the different levels remains one of the hardest problems in cognitive science.
-\end{enumerate}
+\begin{insights}
+    \begin{enumerate}
+        \item \textbf{Computation} and computers are not the same.
+              Computation is an abstract concept that can be instantiated by various objects, including non-existing ones.
+              Computers are one such object, but so is the human brain, a cell, or a line of water buckets when manipulated appropriately.
+        \item \textbf{Turing machines} show how little is needed to carry out very complex computations.
+              A movable read-write head, a state register, and an unlimited tape are sufficient to solve even the most complex computations.
+              But figuring out the correct set of instructions may be hard.
+        \item \textbf{Natural language processing} (NLP) is focused on solving language-related tasks with computers.
+              A different aspect of computational linguistics (which I call \textbf{computation linguistics} for lack of a better term) instead seeks to study language as a computational problem.
+              This is the approach presented in this textbook.
+        \item A cognitive system like language can be described on \textbf{Marr's three levels of description}.
+              These are, in increasing order of detail: \emph{computational}, \emph{algorithmic}, and \emph{physical}.
+              The computational level allows us to abstract away from many details that are irrelevant for the issues linguists care about.
+        \item Abstraction is a virtue.
+              It allows for profound insights and succinct generalizations that could not be stated at more fine-grained levels.
+        \item Neurolinguistics and psycholinguistics operate at less abstracted levels, as do approaches based on computational modeling.
+              Each one has valuable contributions to make, but integrating insights from the different levels remains one of the hardest problems in cognitive science.
+    \end{enumerate}
+\end{insights}
 
 \begin{literature}
 
@@ -948,9 +968,9 @@ The papers might be a difficult read at this point, but even if the jargon and c
 \citet{PullumKornai03} and chapters 1 and 10 of \citet{Kornai07} present an overview of \emph{mathematical linguistics}.
 As the name suggests, mathematical linguistics studies language with the help of mathematics.
 This may sound very similar to computation linguistics, but the two are not the same.
-Mathematical linguistics is defined by its mathematical methodology and can be brought to bear on any question.
+Mathematical linguistics is defined by its mathematical methodology and can be brought to bear on any question, whether it has a computational component or not.
 Computation linguistics, on the other hand, is a subfield of linguistics that explores the computational aspects of language.
-In practice, though, the two have a very large intersection of researchers.
+It usually does so with the help of mathematics, which is why mathematical linguistics and computation linguistics have a very large overlap.
 
 \citet{Krahmer10} discusses the interplay of computational linguistics and psycholinguistics.
 \citet{Crocker10} is a more extensive survey of the subfield of computational psycholinguistics.
@@ -960,7 +980,7 @@ There are numerous publications on ACT-R, but a computationally minded reader is
 
 \paragraph{Alan Turing}
 The Turing Machine was first discussed in \citet{Turing36, Turing38}.
-\citet{Hodges83} is a gripping biography of Alan Turing; it had been out of print for a long time, but was reprinted after the release of Hollywood's biopic \emph{The Imitation Game}, with Benedict Cumberbatch as Alan Turing.
+\citet{Hodges83} is a gripping biography of Alan Turing; it was out of print for a long time, but has been reprinted after the release of Hollywood's biopic \emph{The Imitation Game}, with Benedict Cumberbatch as Alan Turing.
 Turing has also been tremendously influential in the domain of artificial intelligence. 
 For a technically light-weight but sprawling pop-science introduction to this topic, see \citet{Hofstadter79}.
 
@@ -976,28 +996,10 @@ For applications of TAG in molecular biology see \citet{Uemura.etal99} and \cite
 The study on predicting the success of novels is \citet{AshokEtAl13}.
 The tri-level hypothesis is formulated in \citet{MarrPoggio76} and \citet{Marr82}.
 \end{literature}
-
-\subsection*{Exercises}
-\label{sec:formal_exercises}
-
-\thexload{tm_copy}
-
-\thexload{tm_switchstart}
-
-\thexload{tm_switchstart_anywhere}
-
-\thexload{tm_subtract}
-
-\thexload{tm_subtract_followup}
-
-\thexload{practicalargument_bees}
-
-\thexload{linear_binary_search}
-
-\thexload{binary_search_failure}
+% JonasKordin16
 
 
-\section{Code}
+\begin{programming}
 \label{sec:formal_code}
 
 \subsection{Linear search and binary search}
@@ -1006,7 +1008,7 @@ The tri-level hypothesis is formulated in \citet{MarrPoggio76} and \citet{Marr82
 Linear search is one of the simplest search algorithms and can be implemented in 4 lines.
 The code here implements it as a function that returns either \pythoninline{False} or an integer.
 \pythoninline{False} is returned iff the search item is not in the list.
-Hence when an integer is returned, it indicates the leftmost position of the search item.
+When an integer is returned, it indicates the leftmost position of the search item.
 
 Note that the docstring specifies the intended type of each argument.
 The type of the search item is set to \pythoninline{any}, which means that there are no restrictions on its type.
@@ -1088,7 +1090,7 @@ Unfortunately, it is also very inefficient.
 Here we create an empty list and only add an item to it if said item occurs in both lists.
 Doing this requires two \pythoninline{for}-loops.
 Notice how we do a full iteration over the second list for each element in the first list.
-If the first list contains $m$ items and the second one $n$, we perform a total of $m + (m * n)$ lookups.
+If the first list contains $m$ items and the second one $n$, we perform a total of $m + (m \times n)$ lookups.
 So the number of lookups grows much faster than the combined number of elements in the lists.
 
 The obvious problem is that we look at the second list over and over again, rather than just processing it once and memorizing what elements occur in it.
@@ -1097,7 +1099,8 @@ A dictionary uses keys as an addressing system for quickly looking up items.
 %
 \begin{center}
     \begin{pythoncode}
-    >>> A = {'some_key': 'the_value', 'key_2': [5, 3],
+    >>> A = {'some_key': 'the_value',
+             'key_2': [5, 3],
              10: 'integers can be keys, too'}
     >>> A.get('some_key')
     'the_value'
@@ -1127,3 +1130,28 @@ The two pieces of code we came up with are almost exactly the same, yet they dif
 \cexload{listintersection_in}
 
 \cexload{listintersection_multiple}
+
+Careful, the key word here is \emph{finite}.
+Throughout this book, we will encounter various computing devices that differ widely in their power.
+And most of the time, those differences in power stem from requirements that some specific resource be finitely bounded.
+In the case of the Turing machine, the state register and the list of instructions .
+The tape, on the other hand,
+\end{programming}
+
+\begin{exercises}
+\thexload{tm_copy}
+
+\thexload{tm_switchstart}
+
+\thexload{tm_switchstart_anywhere}
+
+\thexload{tm_subtract}
+
+\thexload{tm_subtract_followup}
+
+\thexload{practicalargument_bees}
+
+\thexload{linear_binary_search}
+
+\thexload{binary_search_failure}
+\end{exercises}
